@@ -35,7 +35,7 @@ func newBill(name string) bill {
 * %25v will do the same and add the remaining space left to the value
  */
 // format the bill
-func (b bill) format() string {
+func (b *bill) format() string {
 	fs := "Bill breakdown \n"
 	var total float64 = 0
 
@@ -45,8 +45,32 @@ func (b bill) format() string {
 		total += v
 	}
 
+	// Add tip
+	fs += fmt.Sprintf("%-25v ...$%0.2f\n ", "tip:", b.tip)
+
 	// total
-	fs += fmt.Sprintf("%-25v ...$%0.2f", "total:", total)
+	fs += fmt.Sprintf("%-25v ...$%0.2f", "total:", total+b.tip)
 
 	return fs
+}
+
+// Update tip
+
+/*
+* The below commented function will not update the tip because it is updating the copy of the value and not the acutal value
+* To overcome this issue, we need to use pointer to the bill.
+ */
+// func (b bill) updateTip(tip float64) {
+
+/*
+* Now we are passing a pointer to a 'b' object which will point to the actual tip variable
+* For struct, we don't need to dereference it using(*d)
+ */
+func (b *bill) updateTip(tip float64) {
+	b.tip = tip
+}
+
+// Add an item to the bill
+func (b *bill) addItem(name string, price float64) {
+	b.items[name] = price
 }
