@@ -1,0 +1,4 @@
+Bill breakdown 
+r:                        ...$2
+tip:                      ...$0.00
+ total:                    ...$2.00

@@ -1,6 +1,9 @@
 package main
 
-import "fmt"
+import (
+	"fmt"
+	"os"
+)
 
 // Struct
 // Created a custom structure consisting of required variables
@@ -73,4 +76,16 @@ func (b *bill) updateTip(tip float64) {
 // Add an item to the bill
 func (b *bill) addItem(name string, price float64) {
 	b.items[name] = price
+}
+
+// Save file
+func (b *bill) save() {
+	data := []byte(b.format())
+
+	err := os.WriteFile(b.name+".txt", data, 0644)
+	if err != nil {
+		panic(err)
+	}
+
+	fmt.Println("bill was saved to file")
 }
